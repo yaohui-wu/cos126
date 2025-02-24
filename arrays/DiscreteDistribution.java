@@ -8,6 +8,7 @@ public class DiscreteDistribution {
             int ai = Integer.parseInt(args[i + 1]);
             sums[i + 1] = sums[i] + ai;
         }
+        int count = 0;
         for (int i = 0; i < m; i += 1) {
             int r = (int) (Math.random() * (sums[n] - 1));
             // Binary search.
@@ -18,15 +19,28 @@ public class DiscreteDistribution {
                 int lower = sums[mid - 1];
                 int upper = sums[mid];
                 if (lower <= r && r < upper) {
-                    System.out.print(mid + " ");
-                    left = right;
+                    System.out.print(mid);
+                    count += 1;
+                    left = right + 1;
                 } else if (r < lower) {
                     right = mid - 1;
                 } else {
                     left = mid + 1;
                 }
             }
+            if (left == right) {
+                System.out.print(left);
+                count += 1;
+            }
+            if (count == 25) {
+                System.out.println();
+                count = 0;
+            } else {
+                System.out.print(" ");
+            }
         }
-        System.out.println();
+        if (count != 0) {
+            System.out.println();
+        }
     }
 }
