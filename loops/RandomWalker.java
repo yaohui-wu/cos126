@@ -4,9 +4,9 @@ public class RandomWalker {
         // Starting point.
         int x = 0;
         int y = 0;
-        int manhattan = 0; // Manhattan distance.
-        int steps = 0;
         System.out.println("(" + x + ", " + y + ")");
+        int steps = 0;
+        int manhattan = 0; // Manhattan distance.
         while (manhattan != r) {
             double random = Math.random();
             if (random < 0.25) {
@@ -18,11 +18,10 @@ public class RandomWalker {
             } else {
                 x -= 1; // West.
             }
-            manhattan = Math.abs(x) + Math.abs(y);
             steps += 1;
             System.out.println("(" + x + ", " + y + ")");
+            manhattan = Math.abs(x) + Math.abs(y);
         }
-        System.out.println("(" + x + ", " + y + ")");
         System.out.println("steps = " + steps);
     }
 }
