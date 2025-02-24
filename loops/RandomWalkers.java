@@ -8,8 +8,8 @@ public class RandomWalkers {
             // Starting point.
             int x = 0;
             int y = 0;
-            int manhattan = 0; // Manhattan distance.
             int steps = 0;
+            int manhattan = 0; // Manhattan distance.
             while (manhattan != r) {
                 double random = Math.random();
                 if (random < 0.25) {
@@ -21,8 +21,8 @@ public class RandomWalkers {
                 } else {
                     x -= 1; // West.
                 }
-                manhattan = Math.abs(x) + Math.abs(y);
                 steps += 1;
+                manhattan = Math.abs(x) + Math.abs(y);
             }
             avg += steps;
         }
