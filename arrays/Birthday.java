@@ -5,29 +5,33 @@ public class Birthday {
         int trials = Integer.parseInt(args[1]);
         int[] results = new int[n];
         for (int i = 0; i < trials; i += 1) {
-            // Number of people with distinct birthdays.
             int people = 0;
             // At least 2 and at most N + 1 people for a shared birthday.
             boolean[] bdays = new boolean[n];
-            int bday = (int) (Math.random() * n);
-            while (!bdays[bday]) {
-                bdays[bday] = true;
-                people += 1;
+            int bday = 0;
+            boolean shared = false;
+            while (!shared) {
                 bday = (int) (Math.random() * n);
+                if (bdays[bday]) {
+                    shared = true;
+                } else {
+                    bdays[bday] = true;
+                }
+                people += 1;
             }
-            results[people - 1] += 1;
+            results[people - 2] += 1;
         }
         int count = 1;
         int sum = 0;
         double frac = 0.0;
+        System.out.println(count + "\t" + sum + "\t" + frac);
         while (frac < 0.5) {
-            System.out.println(count + "\t" + sum + "\t" + frac);
             count += 1;
             sum += results[count - 2];
             if (frac < 0.5) {
                 frac = (double) sum / trials;
             }
+            System.out.println(count + "\t" + sum + "\t" + frac);
         }
-        System.out.println(count + "\t" + sum + "\t" + frac);
     }
 }
