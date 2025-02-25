@@ -3,9 +3,11 @@ public class Birthday {
         // Birthday problem.
         int n = Integer.parseInt(args[0]);
         int trials = Integer.parseInt(args[1]);
-        int[] results = new int[n + 2];
+        int[] results = new int[n];
         for (int i = 0; i < trials; i += 1) {
+            // Number of people with distinct birthdays.
             int people = 0;
+            // At least 2 and at most N + 1 people for a shared birthday.
             boolean[] bdays = new boolean[n];
             int bday = (int) (Math.random() * n);
             while (!bdays[bday]) {
@@ -13,7 +15,7 @@ public class Birthday {
                 people += 1;
                 bday = (int) (Math.random() * n);
             }
-            results[people] += 1;
+            results[people - 1] += 1;
         }
         int count = 1;
         int sum = 0;
@@ -21,7 +23,7 @@ public class Birthday {
         while (frac < 0.5) {
             System.out.println(count + "\t" + sum + "\t" + frac);
             count += 1;
-            sum += results[count - 1];
+            sum += results[count - 2];
             if (frac < 0.5) {
                 frac = (double) sum / trials;
             }
