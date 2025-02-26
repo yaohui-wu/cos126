@@ -8,39 +8,43 @@ public class Minesweeper {
          * containing mines, uniformly at random.
          */
         int[][] cells = new int[m + 2][n + 2];
-        for (int i = 0; i < k; i += 1) {
-            int row = (int) (Math.random() * m) + 1;
-            int col = (int) (Math.random() * n) + 1;
+        int count = 0;
+        while (count < k) {
+            int index = (int) (Math.random() * (m * n));
+            int row = index / n + 1;
+            int col = index % n + 1;
             if (cells[row][col] != -1) {
                 cells[row][col] = -1; // Put a mine.
+                count += 1;
             }
         }
         for (int row = 1; row <= m; row += 1) {
             for (int col = 1; col <= n; col += 1) {
-                if (cells[row][col] == -1) {
-                    if (cells[row - 1][col - 1] != -1) {
-                        cells[row - 1][col - 1] += 1;
+                if (cells[row][col] != -1) {
+                    // Count the number of mines in the 8 neighboring cells.
+                    if (cells[row - 1][col - 1] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row - 1][col] != -1) {
-                        cells[row - 1][col] += 1;
+                    if (cells[row - 1][col] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row - 1][col + 1] != -1) {
-                        cells[row - 1][col + 1] += 1;
+                    if (cells[row - 1][col + 1] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row - 1][col - 1] != -1) {
-                        cells[row - 1][col - 1] += 1;
+                    if (cells[row][col - 1] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row - 1][col + 1] != -1) {
-                        cells[row - 1][col + 1] += 1;
+                    if (cells[row][col + 1] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row + 1][col - 1] != -1) {
-                        cells[row + 1][col - 1] += 1;
+                    if (cells[row + 1][col - 1] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row + 1][col] != -1) {
-                        cells[row + 1][col] += 1;
+                    if (cells[row + 1][col] == -1) {
+                        cells[row][col] += 1;
                     }
-                    if (cells[row + 1][col + 1] != -1) {
-                        cells[row + 1][col + 1] += 1;
+                    if (cells[row + 1][col + 1] == -1) {
+                        cells[row][col] += 1;
                     }
                 }
             }
