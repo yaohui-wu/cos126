@@ -10,7 +10,7 @@ public class DiscreteDistribution {
         }
         int count = 0;
         for (int i = 0; i < m; i += 1) {
-            int r = (int) (Math.random() * (sums[n] - 1));
+            int r = (int) (Math.random() * sums[n]);
             // Binary search.
             int left = 1;
             int right = n;
