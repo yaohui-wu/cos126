@@ -5,6 +5,7 @@ public class WorldMap {
         StdDraw.setCanvasSize(width, height);
         StdDraw.setXscale(0, width);
         StdDraw.setYscale(0, height);
+        StdDraw.enableDoubleBuffering();
         while (!StdIn.isEmpty()) {
             StdIn.readString(); // Skip the region name.
             int num = StdIn.readInt(); // Number of vertices.
@@ -16,5 +17,6 @@ public class WorldMap {
             }
             StdDraw.polygon(xs, ys);
         }
+        StdDraw.show();
     }
 }
