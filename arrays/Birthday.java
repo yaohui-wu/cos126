@@ -28,8 +28,8 @@ public class Birthday {
             count += 1;
             int result = results[count - 2];
             sum += result;
-            frac += (double) result / trials;
-            System.out.println(count + "\t" + sum + "\t" + frac);
+            frac = (double) sum / trials;
+            System.out.println(count + "\t" + result + "\t" + frac);
         }
     }
 }
