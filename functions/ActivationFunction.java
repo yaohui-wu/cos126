@@ -32,9 +32,19 @@ public class ActivationFunction {
      * Returns the hyperbolic tangent of X.
      */
     public static double tanh(double x) {
+        double tanh = 1.0;
+        int cmp = Double.compare(x, 20.0);
+        if (cmp >= 0) {
+            return tanh;
+        }
+        cmp = Double.compare(x, -20.0);
+        if (cmp <= 0) {
+            tanh = -1.0;
+            return tanh;
+        }
         double posEx = Math.exp(x); // Positive exponent.
         double negEx = Math.exp(-x); // Negative exponent.
-        double tanh = (posEx - negEx) / (posEx + negEx);
+        tanh = (posEx - negEx) / (posEx + negEx);
         return tanh;
     }
 
@@ -42,7 +52,15 @@ public class ActivationFunction {
      * Returns the softsign function of X.
      */
     public static double softsign(double x) {
-        double softsign = x / (1.0 + Math.abs(x));
+        double softsign = 1.0;
+        if (x == Double.POSITIVE_INFINITY) {
+            return softsign;
+        }
+        if (x == Double.NEGATIVE_INFINITY) {
+            softsign = -1.0;
+            return softsign;
+        }
+        softsign = x / (1.0 + Math.abs(x));
         return softsign;
     }
 
@@ -52,20 +70,20 @@ public class ActivationFunction {
     public static double sqnl(double x) {
         double sqnl = -1.0;
         // Compare with the lower endpoint.
-        int cmpLo = Double.compare(x, -2.0);
-        if (cmpLo <= 0) {
+        int cmp = Double.compare(x, -2.0);
+        if (cmp <= 0) {
             return sqnl;
         }
         // Compare with the upper endpoint.
-        int cmpHi = Double.compare(x, 2.0);
-        if (cmpHi >= 0) {
+        cmp = Double.compare(x, 2.0);
+        if (cmp >= 0) {
             sqnl = 1.0;
             return sqnl;
         }
         double frac = x * x / 4.0;
         // Compare with the middle point.
-        int cmpMid = Double.compare(x, 0.0);
-        if (cmpMid < 0) {
+        cmp = Double.compare(x, 0.0);
+        if (cmp < 0) {
             sqnl = x + frac;
             return sqnl;
         }
