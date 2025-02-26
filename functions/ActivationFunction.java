@@ -97,10 +97,21 @@ public class ActivationFunction {
      */
     public static void main(String[] args) {
         double x = Double.parseDouble(args[0]);
-        System.out.println("heaviside(" + x + ") = " + heaviside(x));
-        System.out.println("sigmoid(" + x + ") = " + sigmoid(x));
-        System.out.println("tanh(" + x + ") = " + tanh(x));
-        System.out.println("softsign(" + x + ") = " + softsign(x));
-        System.out.println("sqnl(" + x + ") = " + sqnl(x));
+        String input = Double.toString(x);
+        int inputLen = input.length();
+        String longest = "heaviside(";
+        int width = longest.length() + inputLen;
+        String format = "%" + width + "s";
+        String s = x +  ") = ";
+        System.out.printf(format, "heaviside(");
+        System.out.println(s + heaviside(x));
+        System.out.printf(format, "sigmoid(");
+        System.out.println(s + sigmoid(x));
+        System.out.printf(format, "tanh(");
+        System.out.println(s + tanh(x));
+        System.out.printf(format, "softsign(");
+        System.out.println(s + softsign(x));
+        System.out.printf(format, "sqnl(");
+        System.out.println(s + sqnl(x));
     }
 }
