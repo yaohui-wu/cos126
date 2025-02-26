@@ -8,10 +8,9 @@ public class Birthday {
             int people = 0;
             // At least 2 and at most N + 1 people for a shared birthday.
             boolean[] bdays = new boolean[n];
-            int bday = 0;
             boolean shared = false;
             while (!shared) {
-                bday = (int) (Math.random() * n);
+                int bday = (int) (Math.random() * n);
                 if (bdays[bday]) {
                     shared = true;
                 } else {
@@ -27,10 +26,9 @@ public class Birthday {
         System.out.println(count + "\t" + sum + "\t" + frac);
         while (frac < 0.5) {
             count += 1;
-            sum += results[count - 2];
-            if (frac < 0.5) {
-                frac = (double) sum / trials;
-            }
+            int result = results[count - 2];
+            sum += result;
+            frac += (double) result / trials;
             System.out.println(count + "\t" + sum + "\t" + frac);
         }
     }
