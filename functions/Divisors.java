@@ -72,9 +72,9 @@ public class Divisors {
         int b = Integer.parseInt(args[1]);
         String f = "gcd"; // Function.
         String format = "%s(%d, %d) = %d\n";
-        System.out.printf(format, f, a, b, gcd(a,b));
+        System.out.printf(format, f, a, b, gcd(a, b));
         f = "lcm";
-        System.out.printf(format, f, a, b, lcm(a,b));
+        System.out.printf(format, f, a, b, lcm(a, b));
         f = "areRelativelyPrime";
         format = "%s(%d, %d) = %b\n";
         boolean coprime = areRelativelyPrime(a, b);
