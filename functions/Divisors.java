@@ -3,7 +3,6 @@ public class Divisors {
      * Returns the greatest common divisor of A and B.
      */
     public static int gcd(int a, int b) {
-        // Euclidean algorithm.
         int gcd = 0;
         if (a == 0 && b == 0) {
             return gcd;
@@ -14,6 +13,7 @@ public class Divisors {
         }
         a = Math.abs(a);
         b = Math.abs(b);
+        // Euclidean algorithm.
         while (b != 0) {
             // Replace (A, B) with (B, A mod B).
             int temp = a;
@@ -53,7 +53,9 @@ public class Divisors {
         if (n <= 0) {
             return phi;
         }
-        for (int i = 1; i < n; i += 1) {
+        phi = 1;
+        // 1 is relatively prime with any positive integer.
+        for (int i = 2; i < n; i += 1) {
             if (areRelativelyPrime(i, n)) {
                 phi += 1;
             }
@@ -68,10 +70,18 @@ public class Divisors {
     public static void main(String[] args) {
         int a = Integer.parseInt(args[0]);
         int b = Integer.parseInt(args[1]);
-        System.out.printf("gcd(%d,%d) = %d", a, b, gcd(a,b));
-        System.out.printf("lcm(%d,%d) = %d", a, b, lcm(a,b));
-        System.out.printf("areRelativelyPrime(%d,%d) = %d", a, b, areRelativelyPrime(a,b));
-        System.out.printf("totient(%d) = %d", a, totient(a));
-        System.out.printf("totient(%d) = %d", b, totient(b));
+        String f = "gcd"; // Function.
+        String format = "%s(%d, %d) = %d\n";
+        System.out.printf(format, f, a, b, gcd(a,b));
+        f = "lcm";
+        System.out.printf(format, f, a, b, lcm(a,b));
+        f = "areRelativelyPrime";
+        format = "%s(%d, %d) = %b\n";
+        boolean coprime = areRelativelyPrime(a, b);
+        System.out.printf(format, f, a, b, coprime);
+        f = "totient";
+        format = "%s(%d) = %d\n";
+        System.out.printf(format, f, a, totient(a));
+        System.out.printf(format, f, b, totient(b));
     }
 }
