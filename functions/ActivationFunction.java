@@ -32,6 +32,9 @@ public class ActivationFunction {
      * Returns the hyperbolic tangent of X.
      */
     public static double tanh(double x) {
+        if (Double.isNaN(x)) {
+            return Double.NaN;
+        }
         double tanh = 1.0;
         int cmp = Double.compare(x, 20.0);
         if (cmp >= 0) {
@@ -52,6 +55,9 @@ public class ActivationFunction {
      * Returns the softsign function of X.
      */
     public static double softsign(double x) {
+        if (Double.isNaN(x)) {
+            return Double.NaN;
+        }
         double softsign = 1.0;
         if (x == Double.POSITIVE_INFINITY) {
             return softsign;
@@ -68,6 +74,9 @@ public class ActivationFunction {
      * Returns the square nonlinearity function of X.
      */
     public static double sqnl(double x) {
+        if (Double.isNaN(x)) {
+            return Double.NaN;
+        }
         double sqnl = -1.0;
         // Compare with the lower endpoint.
         int cmp = Double.compare(x, -2.0);
@@ -81,7 +90,7 @@ public class ActivationFunction {
             return sqnl;
         }
         double frac = x * x / 4.0;
-        // Compare with the middle point.
+        // Compare with the middle endpoint.
         cmp = Double.compare(x, 0.0);
         if (cmp < 0) {
             sqnl = x + frac;
