@@ -5,10 +5,13 @@ public class TrinomialBrute {
     public static long trinomial(int n, int k) {
         // Base case.
         long tri = 1;
-        if (n == 0 && k == 0) {
+        // T(N, K) = T(N, -K).
+        k = Math.abs(k);
+        // T(N, N) = 1 for all integers N >= 0.
+        if (n == k) {
             return tri;
         }
-        if (k < -n || k > n) {
+        if (n < k) {
             tri = 0;
             return tri;
         }
