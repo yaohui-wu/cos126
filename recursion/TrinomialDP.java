@@ -3,14 +3,27 @@ public class TrinomialDP {
      * Returns the trinomial coefficient T(N, K).
      */
     public static long trinomial(int n, int k) {
-        long tri = 1;
+        long tri = 0;
         if (n == 0 && k == 0) {
+            tri = 1;
             return tri;
         }
-        if (k < -n || k > n) {
-            tri = 0;
+        k = Math.abs(k); // Fact: T(N, K) = T(N, -K).
+        if (k > n) {
             return tri;
         }
+        // Dynamic programming (bottom-up).
+        long[][] tris = new long[n + 1][k + 2];
+        tris[0][0] = 1;
+        for (int i = 1; i < k + 2; i += 1) {
+            tris[0][i] = 0;
+        }
+        for (int i = 1; i < n + 1; i += 1) {
+            for (int j = 1; j < k + 1; j += 1) {
+                tris[i][j] = 0;
+            }
+        }
+        tri = tris[n][k];
         return tri;
     }
 
