@@ -3,16 +3,16 @@ public class TrinomialBrute {
      * Returns the trinomial coefficient T(N, K).
      */
     public static long trinomial(int n, int k) {
-        // Base case.
-        long tri = 1;
+        // Base cases.
+        long tri = 0;
         // T(N, K) = T(N, -K).
         k = Math.abs(k);
-        // T(N, N) = 1.
-        if (n == k) {
+        if (n < k) {
             return tri;
         }
-        if (n < k) {
-            tri = 0;
+        // T(N, N) = 1.
+        if (n == k) {
+            tri = 1;
             return tri;
         }
         // Recurrence relation.
