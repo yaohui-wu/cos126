@@ -7,7 +7,7 @@ public class TrinomialBrute {
         long tri = 1;
         // T(N, K) = T(N, -K).
         k = Math.abs(k);
-        // T(N, N) = 1 for all integers N >= 0.
+        // T(N, N) = 1.
         if (n == k) {
             return tri;
         }
