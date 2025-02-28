@@ -14,12 +14,15 @@ public class TrinomialDP {
             tri = 1;
             return tri;
         }
-        // Dynamic programming (bottom-up).
         int size = n + 1;
-        long[][] tris = new long[size][size];
+        long[][] tris = new long[size][]; // Trinomial triangle.
+        for (int i = 0; i < size; i += 1) {
+            tris[i] = new long[size - i + k];
+        }
+        // Dynamic programming (bottom-up).
         tris[0][0] = 1;
         for (int i = 1; i < size; i += 1) {
-            for (int j = 0; j < size; j += 1) {
+            for (int j = 0; j < size - i + k; j += 1) {
                 long t = 0;
                 if (i > j) {
                     int m = i - 1;
@@ -37,7 +40,7 @@ public class TrinomialDP {
         }
         // TODO: Show output for debugging (remove this after algorithm works).
         for (int i = 0; i < size; i += 1) {
-            for (int j = 0; j < size; j += 1) {
+            for (int j = 0; j < size - i + k; j += 1) {
                 System.out.print(tris[i][j] + " ");
             }
             System.out.println();
