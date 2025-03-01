@@ -24,34 +24,29 @@ public class TrinomialDP {
         // T(N, K) = T(N - 1, K - 1) + T(N - 1, K) + T(N - 1, K + 1).
         for (int i = 1; i < size; i += 1) {
             for (int j = 0; j < tris[i].length; j += 1) {
-                long t = 1;
+                tri = 1;
                 if (i != j) {
-                    t = 0;
+                    tri = 0;
                     int m = i - 1;
                     int len = tris[m].length;
                     if (j - 1 < 0 && j + 1 < len) {
-                        t += tris[m][j + 1];
+                        tri += tris[m][j + 1];
                     } else if (j - 1 >= 0) {
-                        t += tris[m][j - 1]; // T(N - 1, K - 1).
+                        tri += tris[m][j - 1]; // T(N - 1, K - 1).
                     }
                     if (j < len) {
-                        t += tris[m][j]; // T(N - 1, K).
+                        tri += tris[m][j]; // T(N - 1, K).
                     }
                     if (j + 1 < len) {
-                        t += tris[m][j + 1]; // T(N - 1, K + 1).
+                        tri += tris[m][j + 1]; // T(N - 1, K + 1).
                     }
                 }
-                tris[i][j] = t;
+                if (i == n && j == k) {
+                    return tri;
+                }
+                tris[i][j] = tri;
             }
         }
-        // TODO: Show output for debugging (remove this after algorithm works).
-        for (int i = 0; i < size; i += 1) {
-            for (int j = 0; j < tris[i].length; j += 1) {
-                System.out.print(tris[i][j] + " ");
-            }
-            System.out.println();
-        }
-        tri = tris[n][k];
         return tri;
     }
 
@@ -62,7 +57,6 @@ public class TrinomialDP {
         int n = Integer.parseInt(args[0]);
         int k = Integer.parseInt(args[1]);
         long tri = trinomial(n, k);
-        // TODO: Show output for debugging (change this after algorithm works).
-        System.out.printf("T(%d, %d) = %d\n", n, k, tri);
+        System.out.println(tri);
     }
 }
