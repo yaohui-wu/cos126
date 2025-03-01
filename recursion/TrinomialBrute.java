@@ -16,8 +16,9 @@ public class TrinomialBrute {
             return tri;
         }
         // Recurrence relation.
-        tri = trinomial(n - 1, k - 1) + trinomial(n - 1, k);
-        tri += trinomial(n - 1, k + 1);
+        int m = n - 1;
+        // T(N, K) = T(N - 1, K - 1) + T(N - 1, K) + T(N - 1, K + 1).
+        tri = trinomial(m, k - 1) + trinomial(m, k) + trinomial(m, k + 1);
         return tri;
     }
 
