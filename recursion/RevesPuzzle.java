@@ -14,15 +14,19 @@ public class RevesPuzzle {
         if (n == 0) {
             return;
         }
-        StdOut.printf("Move disc %d from %s to %s\n", n, from, to);
         // Frame–Stewart algorithm.
         int k = (int) Math.round(n + 1 - Math.sqrt(2 * n + 1));
+        reves(k, from, temp1, to, temp2);
+        hanoi(n - k, from, temp1, to);
+        reves(k, temp2, from, temp1, to);
     }
 
     private static void hanoi(int n, String from, String temp, String to) {
         if (n == 0) {
             return;
         }
+        hanoi(n - 1, from, to, temp);
         StdOut.printf("Move disc %d from %s to %s\n", n, from, to);
+        hanoi(n - 1, temp, from, to);
     }
 }
