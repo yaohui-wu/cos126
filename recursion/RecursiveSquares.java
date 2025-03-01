@@ -34,8 +34,6 @@ public class RecursiveSquares {
      */
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
-        StdDraw.enableDoubleBuffering();
         draw(n, 0.5, 0.5, 0.5);
-        StdDraw.show();
     }
 }
