@@ -14,16 +14,16 @@ public class MaximumSquareSubmatrix {
          * For each row i and column j, compute the size of the largest
          * contiguous square submatrix whose lower right endpoint is (i, j).
          */
-        int size = 0;
+        int size = 0; // Size of the largest contiguous square submatrix.
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (a[i][j] == 1) {
                     if (i == 0 || j == 0) {
                         sizes[i][j] = 1;
                     } else {
-                        int x = sizes[i - 1][j - 1];
-                        int y = sizes[i - 1][j];
-                        int z = sizes[i][j - 1];
+                        int x = sizes[i - 1][j - 1]; // Top left.
+                        int y = sizes[i - 1][j]; // Top.
+                        int z = sizes[i][j - 1]; // Left.
                         sizes[i][j] = min(x, y, z) + 1;
                     }
                 }
