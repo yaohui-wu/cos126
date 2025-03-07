@@ -6,7 +6,10 @@ public class Ramanujan {
         int count = 0;
         int c = 0;
         double cbrt = Math.cbrt((double) n);
-        // Check if n is the sum of two positive cubes in two different ways.
+        /*
+         * A Ramanujan number can be expressed as the the sum of two positive
+         * cubes in two different ways.
+         */
         for (long a = 1; a < cbrt; a++) {
             double b = Math.cbrt(n - a * a * a);
             if (b == (int) b && a != c) {
@@ -14,7 +17,7 @@ public class Ramanujan {
                 if (count == 2) {
                     return true;
                 }
-                c = (int) b;
+                c = (int) b; // First pair.
             }
         }
         return false;
