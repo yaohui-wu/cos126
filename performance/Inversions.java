@@ -23,27 +23,19 @@ public class Inversions {
         if (n == 0) {
             return p;
         }
-        for (int i = 0; i < n; i++) {
-            p[i] = i;
-        }
-        if (k == 0) {
-            return p;
-        }
-        int count = 0;
-        int i = 0;
-        int j = 1;
-        while (count < k) {
-            if (p[i] <= p[j]) {
-                int temp = p[i];
-                p[i] = p[j];
-                p[j] = temp;
-            }
-            count += 1;
-            j += 1;
-            if (j == n) {
+        // Greedy algorithm.
+        int i = n - 1;
+        int j = 0;
+        while (i > j) {
+            if (k >= i) {
+                p[j] = i;
+                k -= i;
                 i += 1;
-                j = i + 1;
+                j += 1;
+            } else {
+                p[i] = i - j;
             }
+            i -= 1;
         }
         return p;
     }
@@ -56,6 +48,7 @@ public class Inversions {
         int n = Integer.parseInt(args[0]);
         long k = Long.parseLong(args[1]);
         int[] p = generate(n, k);
+        StdOut.println(count(p));
         for (int i = 0; i < n; i++) {
             StdOut.print(p[i]);
             if (i < n - 1) {
