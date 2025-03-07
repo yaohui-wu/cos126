@@ -24,18 +24,19 @@ public class Inversions {
             return p;
         }
         // Greedy algorithm.
+        int element = n - 1;
         int i = n - 1;
         int j = 0;
         while (i > j) {
-            if (k >= i) {
-                p[j] = i;
-                k -= i;
-                i += 1;
+            if (k >= element) {
+                p[j] = element;
+                k -= element;
                 j += 1;
             } else {
-                p[i] = i - j;
+                p[i] = element;
+                i -= 1;
             }
-            i -= 1;
+            element -= 1;
         }
         return p;
     }
