@@ -29,6 +29,7 @@ public class Inversions {
         int j = 0;
         while (i > j) {
             if (k >= element) {
+                // Put the larger element at the beginning to get inversions.
                 p[j] = element;
                 k -= element;
                 j += 1;
