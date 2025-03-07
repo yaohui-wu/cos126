@@ -19,10 +19,10 @@ public class Inversions {
      * Return a permutation of length n with exactly k inversions.
      */
     public static int[] generate(int n, long k) {
-        int[] p = new int[n]; // Permutation.
         if (n == 0) {
-            return p;
+            return new int[0];
         }
+        int[] p = new int[n]; // Permutation.
         // Greedy algorithm.
         int element = n - 1;
         int i = n - 1;
@@ -49,7 +49,6 @@ public class Inversions {
         int n = Integer.parseInt(args[0]);
         long k = Long.parseLong(args[1]);
         int[] p = generate(n, k);
-        StdOut.println(count(p));
         for (int i = 0; i < n; i++) {
             StdOut.print(p[i]);
             if (i < n - 1) {
