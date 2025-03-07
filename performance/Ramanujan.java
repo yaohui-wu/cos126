@@ -4,14 +4,17 @@ public class Ramanujan {
      */
     public static boolean isRamanujan(long n) {
         int count = 0;
-        int bound = (int) Math.round(Math.cbrt((double) n));
-        for (int a = 1; a < bound; a++) {
-            double b = Math.cbrt(n - Math.pow(a, 3.0));
-            if (b == (int) b) {
+        int c = 0;
+        double cbrt = Math.cbrt((double) n);
+        // Check if n is the sum of two positive cubes in two different ways.
+        for (long a = 1; a < cbrt; a++) {
+            double b = Math.cbrt(n - a * a * a);
+            if (b == (int) b && a != c) {
                 count += 1;
                 if (count == 2) {
                     return true;
                 }
+                c = (int) b;
             }
         }
         return false;
