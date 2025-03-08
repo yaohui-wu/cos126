@@ -33,16 +33,26 @@ public class KernelFilter {
      * picture.
      */
     public static Picture sharpen(Picture picture) {
-        // TODO: implement this method.
-        return null;
+        double[][] weights = {
+            {0.0, -1.0, 0.0},
+            {-1.0, 5.0, -1.0},
+            {0.0, -1.0, 0.0}
+        };
+        Picture pic = kernel(picture, weights);
+        return pic;
     }
 
     /**
      * Returns a new picture that applies an Laplacian filter to the given picture.
      */
     public static Picture laplacian(Picture picture) {
-        // TODO: implement this method.
-        return null;
+        double[][] weights = {
+            {-1.0, -1.0, -1.0},
+            {-1.0, 8.0, -1.0},
+            {-1.0, -1.0, -1.0}
+        };
+        Picture pic = kernel(picture, weights);
+        return pic;
     }
 
     /**
@@ -51,7 +61,13 @@ public class KernelFilter {
      */
     public static Picture emboss(Picture picture) {
         // TODO: implement this method.
-        return null;
+        double[][] weights = {
+            {-2.0, -1.0, 0.0},
+            {-1.0, 1.0, 1.0},
+            {0.0, 1.0, 2.0}
+        };
+        Picture pic = kernel(picture, weights);
+        return pic;
     }
 
     /**
@@ -59,8 +75,17 @@ public class KernelFilter {
      * picture.
      */
     public static Picture motionBlur(Picture picture) {
-        // TODO: implement this method.
-        return null;
+        double a = 1.0 / 9.0;
+        double[][] weights = new double[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (i == j) {
+                    weights[i][j] = a;
+                }
+            }
+        }
+        Picture pic = kernel(picture, weights);
+        return pic;
     }
 
     /**
@@ -90,13 +115,16 @@ public class KernelFilter {
 
     private static int kernelRGB(Picture pic, int row, int col, char primary, double[][] weights) {
         int rgb = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                int m = row - 1 + i;
-                int h = pic.height();
-                if (m == -1 || m == h) {
-                    m = wrapRow(m, h);
-                }
+        int size = weights.length;
+        // Compute a linear combination of its neighboring RGB components.
+        for (int i = 0; i < size; i++) {
+            // Periodic boundary conditions.
+            int m = row - 1 + i;
+            int h = pic.height();
+            if (m == -1 || m == h) {
+                m = wrapRow(m, h);
+            }
+            for (int j = 0; j < size; j++) {
                 int n = col - 1 + j;
                 int w = pic.width();
                 if (n == -1 || n == h) {
@@ -111,8 +139,9 @@ public class KernelFilter {
                 } else if (primary == 'B') {
                     primaryVal = color.getBlue();
                 }
-                if (primaryVal != 0) {
-                    rgb += (int) Math.round(primaryVal * weights[i][j]);
+                double weight = weights[i][j];
+                if (primaryVal != 0 && weight != 0.0) {
+                    rgb += (int) Math.round((double) primaryVal * weight);
                 }
             }
         }
@@ -139,6 +168,7 @@ public class KernelFilter {
     }
 
     private static int rgb(int rgb) {
+        // Saturation arithmetic.
         if (rgb < 0) {
             return 0;
         } else if (rgb > 255) {
