@@ -44,7 +44,8 @@ public class KernelFilter {
     }
 
     /**
-     * Returns a new picture that applies an Laplacian filter to the given picture.
+     * Returns a new picture that applies an Laplacian filter to the given
+     * picture.
      */
     public static Picture laplacian(Picture picture) {
         double[][] weights = {
@@ -105,7 +106,12 @@ public class KernelFilter {
         return pic;
     }
 
-    private static Color kernelRGB(Picture pic, int row, int col, double[][] weights) {
+    private static Color kernelRGB(
+        Picture pic,
+        int row,
+        int col,
+        double[][] weights
+    ) {
         double newR = 0.0;
         double newG = 0.0;
         double newB = 0.0;
