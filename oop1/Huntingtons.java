@@ -1,6 +1,7 @@
 public class Huntingtons {
     /**
-     * Returns the maximum number of consecutive repeats of CAG in the DNA string.
+     * Returns the maximum number of consecutive repeats of CAG in the DNA
+     * string.
      */
     public static int maxRepeats(String dna) {
         int length = dna.length();
@@ -28,7 +29,8 @@ public class Huntingtons {
     }
 
     /**
-     * Returns a copy of s, with all whitespace (spaces, tabs, and newlines) removed.
+     * Returns a copy of s, with all whitespace (spaces, tabs, and newlines)
+     * removed.
      */
     public static String removeWhitespace(String s) {
         String str = s.replace(" ", "");
@@ -60,7 +62,7 @@ public class Huntingtons {
     }
 
     /**
-     * Test client.
+     * Output client.
      */
     public static void main(String[] args) {
         In input = new In(args[0]);
