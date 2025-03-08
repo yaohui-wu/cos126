@@ -62,7 +62,7 @@ public class Huntingtons {
     }
 
     /**
-     * Output client.
+     * Analyzes a DNA string for Huntington's disease and produce a diagnosis.
      */
     public static void main(String[] args) {
         In input = new In(args[0]);
