@@ -19,9 +19,10 @@ public class KernelFilter {
             {2.0, 4.0, 2.0},
             {1.0, 2.0, 1.0}
         };
+        double a = 1.0 / 6.0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                weights[i][j] *= 1.0 / 16.0;
+                weights[i][j] *= a;
             }
         }
         Picture pic = kernel(picture, weights);
@@ -60,7 +61,6 @@ public class KernelFilter {
      * picture.
      */
     public static Picture emboss(Picture picture) {
-        // TODO: implement this method.
         double[][] weights = {
             {-2.0, -1.0, 0.0},
             {-1.0, 1.0, 1.0},
@@ -119,17 +119,9 @@ public class KernelFilter {
         // Compute a linear combination of its neighboring RGB components.
         for (int i = 0; i < size; i++) {
             // Periodic boundary conditions.
-            int m = row - 1 + i;
-            int h = pic.height();
-            if (m == -1 || m == h) {
-                m = wrapRow(m, h);
-            }
+            int m = wrap(row - 1 + i, pic.height());
             for (int j = 0; j < size; j++) {
-                int n = col - 1 + j;
-                int w = pic.width();
-                if (n == -1 || n == h) {
-                    n = wrapCol(n, w);
-                }
+                int n = wrap(col - 1 + j, pic.width());
                 Color color = pic.get(n, m);
                 int primaryVal = 0;
                 if (primary == 'R') {
@@ -149,22 +141,11 @@ public class KernelFilter {
         return rgb;
     }
 
-    private static int wrapRow(int row, int height) {
-        if (row == -1) {
-            return height - 1;
-        } else if (row == height) {
-            return 0;
+    private static int wrap(int index, int length) {
+        if (index < 0 || index >= length) {
+            index = Math.floorMod(index, length);
         }
-        return row;
-    }
-
-    private static int wrapCol(int col, int width) {
-        if (col == -1) {
-            return width - 1;
-        } else if (col == width) {
-            return 0;
-        }
-        return col;
+        return index;
     }
 
     private static int rgb(int rgb) {
