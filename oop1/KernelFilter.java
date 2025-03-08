@@ -13,30 +13,55 @@ public class KernelFilter {
      * Returns a new picture that applies a Gaussian blur filter to the given
      * picture.
      */
-    public static Picture gaussian(Picture picture) {}
+    public static Picture gaussian(Picture picture) {
+        double[][] weights = {
+            {1.0, 2.0, 1.0},
+            {2.0, 4.0, 2.0},
+            {1.0, 2.0, 1.0}
+        };
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                weights[i][j] *= 1.0 / 16.0;
+            }
+        }
+        Picture pic = kernel(picture, weights);
+        return pic;
+    }
 
     /**
      * Returns a new picture that applies a sharpen filter to the given
      * picture.
      */
-    public static Picture sharpen(Picture picture) {}
+    public static Picture sharpen(Picture picture) {
+        // TODO: implement this method.
+        return null;
+    }
 
     /**
      * Returns a new picture that applies an Laplacian filter to the given picture.
      */
-    public static Picture laplacian(Picture picture) {}
+    public static Picture laplacian(Picture picture) {
+        // TODO: implement this method.
+        return null;
+    }
 
     /**
      * Returns a new picture that applies an emboss filter to the given
      * picture.
      */
-    public static Picture emboss(Picture picture) {}
+    public static Picture emboss(Picture picture) {
+        // TODO: implement this method.
+        return null;
+    }
 
     /**
      * Returns a new picture that applies a motion blur filter to the given
      * picture.
      */
-    public static Picture motionBlur(Picture picture) {}
+    public static Picture motionBlur(Picture picture) {
+        // TODO: implement this method.
+        return null;
+    }
 
     /**
      * Returns a new picture that applies an arbitrary kernel filter to the
@@ -46,8 +71,8 @@ public class KernelFilter {
         Picture pic = new Picture(picture);
         int w = pic.width();
         int h = pic.height();
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
                 Color color = kernelColor(pic, i, j, weights);
                 pic.set(j, i, color);
             }
@@ -59,26 +84,25 @@ public class KernelFilter {
         int red = kernelRGB(pic, row, col, 'R', weights);
         int green = kernelRGB(pic, row, col, 'G', weights);
         int blue = kernelRGB(pic, row, col, 'B', weights);
-        int rgb = red + green + blue;
-        Color color = new Color(rgb);
+        Color color = new Color(red, green, blue);
         return color;
     }
 
     private static int kernelRGB(Picture pic, int row, int col, char primary, double[][] weights) {
         int rgb = 0;
-        for (int i = row - 1; i < row + 2; i++) {
-            for (int j = col - 1; j < col + 2; j++) {
-                int m = i;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int m = row - 1 + i;
                 int h = pic.height();
                 if (m == -1 || m == h) {
-                    m = wrapRow(i, h);
+                    m = wrapRow(m, h);
                 }
-                int n = j;
+                int n = col - 1 + j;
                 int w = pic.width();
                 if (n == -1 || n == h) {
-                    n = wrapCol(j, w);
+                    n = wrapCol(n, w);
                 }
-                Color color = pic.get(m, n);
+                Color color = pic.get(n, m);
                 int primaryVal = 0;
                 if (primary == 'R') {
                     primaryVal = color.getRed();
@@ -88,7 +112,7 @@ public class KernelFilter {
                     primaryVal = color.getBlue();
                 }
                 if (primaryVal != 0) {
-                    rgb += Math.round(primaryVal * weights[i][j]);
+                    rgb += (int) Math.round(primaryVal * weights[i][j]);
                 }
             }
         }
@@ -98,7 +122,7 @@ public class KernelFilter {
 
     private static int wrapRow(int row, int height) {
         if (row == -1) {
-            return height;
+            return height - 1;
         } else if (row == height) {
             return 0;
         }
@@ -107,7 +131,7 @@ public class KernelFilter {
 
     private static int wrapCol(int col, int width) {
         if (col == -1) {
-            return width;
+            return width - 1;
         } else if (col == width) {
             return 0;
         }
