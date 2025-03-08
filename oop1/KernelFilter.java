@@ -19,7 +19,7 @@ public class KernelFilter {
             {2.0, 4.0, 2.0},
             {1.0, 2.0, 1.0}
         };
-        double a = 1.0 / 6.0;
+        double a = 1.0 / 16.0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 weights[i][j] *= a;
@@ -93,52 +93,48 @@ public class KernelFilter {
      * given picture.
      */
     private static Picture kernel(Picture picture, double[][] weights) {
-        Picture pic = new Picture(picture);
-        int w = pic.width();
-        int h = pic.height();
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                Color color = kernelColor(pic, i, j, weights);
+        int width = picture.width();
+        int height = picture.height();
+        Picture pic = new Picture(width, height);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color color = kernelRGB(picture, i, j, weights);
                 pic.set(j, i, color);
             }
         }
         return pic;
     }
 
-    private static Color kernelColor(Picture pic, int row, int col, double[][] weights) {
-        int red = kernelRGB(pic, row, col, 'R', weights);
-        int green = kernelRGB(pic, row, col, 'G', weights);
-        int blue = kernelRGB(pic, row, col, 'B', weights);
-        Color color = new Color(red, green, blue);
-        return color;
-    }
-
-    private static int kernelRGB(Picture pic, int row, int col, char primary, double[][] weights) {
-        int rgb = 0;
+    private static Color kernelRGB(Picture pic, int row, int col, double[][] weights) {
+        double newR = 0.0;
+        double newG = 0.0;
+        double newB = 0.0;
         int size = weights.length;
-        // Compute a linear combination of its neighboring RGB components.
+        int half = size / 2;
+        // Compute a linear combination of the neighboring RGB components.
         for (int i = 0; i < size; i++) {
             // Periodic boundary conditions.
-            int m = wrap(row - 1 + i, pic.height());
+            int m = wrap(row - half + i, pic.height());
             for (int j = 0; j < size; j++) {
-                int n = wrap(col - 1 + j, pic.width());
+                int n = wrap(col - half + j, pic.width());
                 Color color = pic.get(n, m);
-                int primaryVal = 0;
-                if (primary == 'R') {
-                    primaryVal = color.getRed();
-                } else if (primary == 'G') {
-                    primaryVal = color.getGreen();
-                } else if (primary == 'B') {
-                    primaryVal = color.getBlue();
-                }
+                int red = color.getRed();
+                int blue = color.getBlue();
+                int green = color.getGreen();
                 double weight = weights[i][j];
-                if (primaryVal != 0 && weight != 0.0) {
-                    rgb += (int) Math.round((double) primaryVal * weight);
-                }
+                newR += newRGB(red, weight);
+                newG += newRGB(green, weight);
+                newB += newRGB(blue, weight);
             }
         }
-        rgb = rgb(rgb);
-        return rgb;
+        int r = (int) Math.round(newR); // Red.
+        r = rgb(r);
+        int g = (int) Math.round(newG); // Green.
+        g = rgb(g);
+        int b = (int) Math.round(newB); // Blue.
+        b = rgb(b);
+        Color color = new Color(r, g, b);
+        return color;
     }
 
     private static int wrap(int index, int length) {
@@ -146,6 +142,14 @@ public class KernelFilter {
             index = Math.floorMod(index, length);
         }
         return index;
+    }
+
+    private static double newRGB(int rgb, double weight) {
+        if (rgb != 0 && weight != 0.0) {
+            double newRGB = (double) rgb * weight;
+            return newRGB;
+        }
+        return 0.0;
     }
 
     private static int rgb(int rgb) {
