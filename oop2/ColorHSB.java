@@ -37,15 +37,7 @@ public class ColorHSB {
      * b).
      */
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("(");
-        s.append(hue);
-        s.append(", ");
-        s.append(saturation);
-        s.append(", ");
-        s.append(brightness);
-        s.append(")");
-        return s.toString();
+        return String.format("(%d, %d, %d)", hue, saturation, brightness);
     }
 
     /**
@@ -85,9 +77,28 @@ public class ColorHSB {
      * the pre-defined color that is closest to (h, s, b).
      */
     public static void main(String[] args) {
-        int h = Integer.parseInt(args[0]);
-        int s = Integer.parseInt(args[1]);
-        int b = Integer.parseInt(args[2]);
-        ColorHSB color = new ColorHSB(h, s, b);
+        int hue = Integer.parseInt(args[0]);
+        int saturation = Integer.parseInt(args[1]);
+        int brightness = Integer.parseInt(args[2]);
+        ColorHSB color = new ColorHSB(hue, saturation, brightness);
+        int min = Integer.MAX_VALUE;
+        String name = null;
+        ColorHSB nearest = null;
+        while (StdIn.hasNextLine()) {
+            String line = StdIn.readLine();
+            String[] fields = line.split(" ");
+            int h = Integer.parseInt(fields[1]);
+            int s = Integer.parseInt(fields[2]);
+            int b = Integer.parseInt(fields[3]);
+            ColorHSB c = new ColorHSB(h, s, b);
+            int dist = color.distanceSquaredTo(c);
+            if (dist < min) {
+                min = dist;
+                name = fields[0];
+                nearest = c;
+            }
+        }
+        StdOut.printf("%s ", name);
+        StdOut.println(nearest);
     }
 }
