@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * A bar aggregates related information (name, value, and category) for use in
  * a bar chart.
@@ -86,5 +88,31 @@ public final class Bar implements Comparable<Bar> {
     /**
      * Sample client.
      */
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+        // create an array of 10 bars
+        Bar[] bars = new Bar[10];
+        bars[0] = new Bar("Beijing",     22674, "East Asia");
+        bars[1] = new Bar("Cairo",       19850, "Middle East");
+        bars[2] = new Bar("Delhi",       27890, "South Asia");
+        bars[3] = new Bar("Dhaka",       19633, "South Asia");
+        bars[4] = new Bar("Mexico City", 21520, "Latin America");
+        bars[5] = new Bar("Mumbai",      22120, "South Asia");
+        bars[6] = new Bar("Osaka",       20409, "East Asia");
+        bars[7] = new Bar("São Paulo",   21698, "Latin America");
+        bars[8] = new Bar("Shanghai",    25779, "East Asia");
+        bars[9] = new Bar("Tokyo",       38194, "East Asia");
+
+        // sort in ascending order by weight
+        Arrays.sort(bars);
+
+        int length = bars.length;
+        for (int i = 0; i < length; i++) {
+            Bar bar = bars[i];
+            String name = bar.getName();
+            int value = bar.getValue();
+            String category = bar.getCategory();
+            String format = "Name: %s, Value: %d, Category: %s\n";
+            StdOut.printf(format, name, value, category);
+        }
+    }
 }
