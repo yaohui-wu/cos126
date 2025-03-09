@@ -19,16 +19,29 @@ public final class ColorHSB {
     }
 
     private void validateHSB(int h, int s, int b) {
-        validateComponents(359, h);
-        validateComponents(100, s, b);
+        validateHue(h);
+        validateSaturation(s);
+        validateBrightness(b);
     }
 
-    private void validateComponents(int max, int... values) {
-        for (int val : values) {
-            if (val < 0 || val > max) {
-                String error = "Component value out of range";
-                throw new IllegalArgumentException(error);
-            }
+    private void validateHue(int h) {
+        if (h < 0 || h > 359) {
+            String error = "The hue must be between 0 and 359";
+            throw new IllegalArgumentException(error);
+        }
+    }
+
+    private void validateSaturation(int s) {
+        if (s < 0 || s > 100) {
+            String error = "The saturation must be between 0 and 100";
+            throw new IllegalArgumentException(error);
+        }
+    }
+
+    private void validateBrightness(int b) {
+        if (b < 0 || b > 100) {
+            String error = "The brightness must be between 0 and 100";
+            throw new IllegalArgumentException(error);
         }
     }
 
