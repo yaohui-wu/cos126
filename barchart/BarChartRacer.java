@@ -3,7 +3,6 @@ import java.util.Collections;
 
 public class BarChartRacer {
     public static void main(String[] args) {
-        StdAudio.playInBackground("soundtrackE.wav");
         In file = new In(args[0]);
         int k = Integer.parseInt(args[1]);
         String title = file.readLine();
