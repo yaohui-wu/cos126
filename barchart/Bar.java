@@ -68,12 +68,18 @@ public final class Bar implements Comparable<Bar> {
      */
     public int compareTo(Bar that) {
         validateArg(that);
+        if (value < that.value) {
+            return - 1;
+        } else if (value > that.value) {
+            return 1;
+        }
+        return 0;
     }
 
     private void validateArg(Object that) {
         if (that == null) {
             String error = "Argument cannot be null";
-            throw new IllegalArgumentException(error);
+            throw new NullPointerException(error);
         }
     }
 
