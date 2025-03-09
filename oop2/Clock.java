@@ -1,10 +1,12 @@
 /**
- * Represents time on a 24-hour clock with the HH:MM format. Time is measured
+ * Represents time on a MAX_HOURS-hour clock with the HH:MM format. Time is measured
  * in hours (00–23) and minutes (00–59).
  * 
  * @author Yaohui Wu
  */
 public class Clock {
+    private static final int MAX_HOURS = 24;
+    private static final int MAX_MINUTES = 60;
     private int hours;
     private int minutes;
 
@@ -12,19 +14,21 @@ public class Clock {
      * Creates a clock whose initial time is h hours and m minutes.
      */
     public Clock(int h, int m) {
+        validateHours(h);
+        validateMinutes(m);
         hours = h;
         minutes = m;
     }
 
     private void validateHours(int h) {
-        if (h < 0 || h > 23) {
+        if (h < 0 || h >= MAX_HOURS) {
             String error = "Hours must be between 0 and 23";
             throw new IllegalArgumentException(error);
         }
     }
 
     private void validateMinutes(int m) {
-        if (m < 0 || m > 59) {
+        if (m < 0 || m >= MAX_MINUTES) {
             String error = "Minutes must be between 0 and 59";
             throw new IllegalArgumentException(error);
         }
@@ -72,7 +76,7 @@ public class Clock {
 
     }
 
-    public int compareTime(int t1, int t2) {
+    private int compareTime(int t1, int t2) {
         if (t1 < t2) {
             return -1;
         } else if (t1 > t2) {
@@ -86,10 +90,10 @@ public class Clock {
      */
     public void tic() {
         minutes += 1;
-        if (minutes == 60) {
+        if (minutes >= MAX_MINUTES) {
             minutes = 0;
             hours += 1;
-            if (hours == 24) {
+            if (hours >= MAX_HOURS) {
                 hours = 0;
             }
         }
@@ -100,15 +104,15 @@ public class Clock {
      */
     public void toc(int delta) {
         validateDelta(delta);
-        int h = delta / 60;
-        int m = delta % 60;
+        int h = delta / MAX_MINUTES;
+        int m = delta % MAX_MINUTES;
         hours += h;
         minutes += m;
-        if (minutes >= 60) {
-            minutes %= 60;
+        if (minutes >= MAX_MINUTES) {
+            minutes %= MAX_MINUTES;
             hours += 1;
-            if (hours >= 24) {
-                hours %= 24;
+            if (hours >= MAX_HOURS) {
+                hours %= MAX_HOURS;
             }
         }
     }
