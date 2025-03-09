@@ -5,8 +5,8 @@
  * @author Yaohui Wu
  */
 public class Clock {
-    private static final int MAX_HOURS = 24;
-    private static final int MAX_MINUTES = 60;
+    private static final int HOUR_LIMIT = 24;
+    private static final int MINUTES_LIMIT = 60;
     private int hours;
     private int minutes;
 
@@ -18,20 +18,6 @@ public class Clock {
         validateMinutes(m);
         hours = h;
         minutes = m;
-    }
-
-    private void validateHours(int h) {
-        if (h < 0 || h >= MAX_HOURS) {
-            String error = "Hours must be between 0 and 23";
-            throw new IllegalArgumentException(error);
-        }
-    }
-
-    private void validateMinutes(int m) {
-        if (m < 0 || m >= MAX_MINUTES) {
-            String error = "Minutes must be between 0 and 59";
-            throw new IllegalArgumentException(error);
-        }
     }
 
     /**
@@ -46,6 +32,20 @@ public class Clock {
         validateMinutes(m);
         hours = h;
         minutes = m;
+    }
+
+    private void validateHours(int h) {
+        if (h < 0 || h >= HOUR_LIMIT) {
+            String error = "Hours must be between 0 and 23";
+            throw new IllegalArgumentException(error);
+        }
+    }
+
+    private void validateMinutes(int m) {
+        if (m < 0 || m >= MINUTES_LIMIT) {
+            String error = "Minutes must be between 0 and 59";
+            throw new IllegalArgumentException(error);
+        }
     }
 
     private void validateStr(String s) {
@@ -90,10 +90,10 @@ public class Clock {
      */
     public void tic() {
         minutes += 1;
-        if (minutes >= MAX_MINUTES) {
+        if (minutes >= MINUTES_LIMIT) {
             minutes = 0;
             hours += 1;
-            if (hours >= MAX_HOURS) {
+            if (hours >= HOUR_LIMIT) {
                 hours = 0;
             }
         }
@@ -104,16 +104,16 @@ public class Clock {
      */
     public void toc(int delta) {
         validateDelta(delta);
-        int h = delta / MAX_MINUTES;
-        int m = delta % MAX_MINUTES;
+        int h = delta / MINUTES_LIMIT;
+        int m = delta % MINUTES_LIMIT;
         hours += h;
         minutes += m;
-        if (minutes >= MAX_MINUTES) {
-            minutes %= MAX_MINUTES;
+        if (minutes >= MINUTES_LIMIT) {
+            minutes %= MINUTES_LIMIT;
             hours += 1;
-            if (hours >= MAX_HOURS) {
-                hours %= MAX_HOURS;
-            }
+        }
+        if (hours >= HOUR_LIMIT) {
+            hours %= HOUR_LIMIT;
         }
     }
 
