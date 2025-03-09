@@ -3,10 +3,10 @@
  * 
  * @author Yaohui Wu
  */
-public class ColorHSB {
-    private int hue;
-    private int saturation;
-    private int brightness;
+public final class ColorHSB {
+    private final int hue;
+    private final int saturation;
+    private final int brightness;
 
     /**
      * Creates a color with hue h, saturation s, and brightness b.
@@ -25,7 +25,7 @@ public class ColorHSB {
 
     private void validateComponents(int max, int... values) {
         for (int val : values) {
-            if (val < 0 || val >= max) {
+            if (val < 0 || val > max) {
                 String error = "Component value out of range";
                 throw new IllegalArgumentException(error);
             }
@@ -82,23 +82,22 @@ public class ColorHSB {
         int brightness = Integer.parseInt(args[2]);
         ColorHSB color = new ColorHSB(hue, saturation, brightness);
         int min = Integer.MAX_VALUE;
-        String name = null;
+        String nearestName = null;
         ColorHSB nearest = null;
-        while (StdIn.hasNextLine()) {
-            String line = StdIn.readLine();
-            String[] fields = line.split(" ");
-            int h = Integer.parseInt(fields[1]);
-            int s = Integer.parseInt(fields[2]);
-            int b = Integer.parseInt(fields[3]);
+        while (!StdIn.isEmpty()) {
+            String name = StdIn.readString();
+            int h = StdIn.readInt();
+            int s = StdIn.readInt();
+            int b = StdIn.readInt();
             ColorHSB c = new ColorHSB(h, s, b);
             int dist = color.distanceSquaredTo(c);
             if (dist < min) {
                 min = dist;
-                name = fields[0];
+                nearestName = name;
                 nearest = c;
             }
         }
-        StdOut.printf("%s ", name);
+        StdOut.printf("%s ", nearestName);
         StdOut.println(nearest);
     }
 }
