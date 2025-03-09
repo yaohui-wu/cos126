@@ -13,9 +13,33 @@ public final class Bar implements Comparable<Bar> {
      * Creates a new bar.
      */
     public Bar(String name, int value, String category) {
+        validateName(name);
+        validateValue(value);
+        validateCategory(category);
         this.name = name;
         this.value = value;
         this.category = category;
+    }
+
+    private void validateName(String name) {
+        if (name == null) {
+            String error = "Name cannot be null";
+            throw new IllegalArgumentException(error);
+        }
+    }
+
+    private void validateValue(int value) {
+        if (value < 0) {
+            String error = "Value cannot be negative";
+            throw new IllegalArgumentException(error);
+        }
+    }
+
+    private void validateCategory(String category) {
+        if (category == null) {
+            String error = "Category cannot be null";
+            throw new IllegalArgumentException(error);
+        }
     }
 
     /**
@@ -42,7 +66,16 @@ public final class Bar implements Comparable<Bar> {
     /**
      * Compare two bars by value.
      */
-    public int compareTo(Bar that) {}
+    public int compareTo(Bar that) {
+        validateArg(that);
+    }
+
+    private void validateArg(Object that) {
+        if (that == null) {
+            String error = "Argument cannot be null";
+            throw new IllegalArgumentException(error);
+        }
+    }
 
     /**
      * Sample client.
