@@ -23,22 +23,22 @@ public final class Bar implements Comparable<Bar> {
         this.category = category;
     }
 
-    private void validateName(String name) {
-        if (name == null) {
+    private void validateName(String barName) {
+        if (barName == null) {
             String error = "Name cannot be null";
             throw new IllegalArgumentException(error);
         }
     }
 
-    private void validateValue(int value) {
-        if (value < 0) {
+    private void validateValue(int barValue) {
+        if (barValue < 0) {
             String error = "Value cannot be negative";
             throw new IllegalArgumentException(error);
         }
     }
 
-    private void validateCategory(String category) {
-        if (category == null) {
+    private void validateCategory(String barCategory) {
+        if (barCategory == null) {
             String error = "Category cannot be null";
             throw new IllegalArgumentException(error);
         }
@@ -71,7 +71,7 @@ public final class Bar implements Comparable<Bar> {
     public int compareTo(Bar that) {
         validateArg(that);
         if (value < that.value) {
-            return - 1;
+            return -1;
         } else if (value > that.value) {
             return 1;
         }
