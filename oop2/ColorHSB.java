@@ -4,6 +4,8 @@
  * @author Yaohui Wu
  */
 public final class ColorHSB {
+    private static final int MAX_HUE = 359;
+    private static final int MAX_PERCENT = 100;
     private final int hue;
     private final int saturation;
     private final int brightness;
@@ -25,14 +27,14 @@ public final class ColorHSB {
     }
 
     private void validateHue(int h) {
-        if (h < 0 || h > 359) {
+        if (h < 0 || h > MAX_HUE) {
             String error = "The hue must be between 0 and 359";
             throw new IllegalArgumentException(error);
         }
     }
 
     private void validateSaturation(int s) {
-        if (s < 0 || s > 100) {
+        if (s < 0 || s > MAX_PERCENT) {
             String error = "The saturation must be between 0 and 100";
             throw new IllegalArgumentException(error);
         }
