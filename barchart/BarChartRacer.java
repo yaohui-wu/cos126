@@ -46,5 +46,6 @@ public class BarChartRacer {
             StdDraw.clear();
             chart.reset();
         }
+        file.close();
     }
 }
